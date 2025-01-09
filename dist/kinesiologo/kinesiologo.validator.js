@@ -1,5 +1,6 @@
 import { body } from 'express-validator';
 import { Especialidad } from '../especialidad/especialidad.entity.js';
+import { Consultorio } from '../consultorio/consultorio.entity.js';
 import { orm } from '../shared/db/orm.js';
 const em = orm.em;
 export const validateKinesiologo = [
@@ -44,34 +45,33 @@ export const validateKinesiologo = [
       }).withMessage('La contraseña debe tener al menos 8 caracteres, 1 mayúscula, 1 minúscula y 1 número'),
   */
     body('especialidad')
-        .isString()
-        .withMessage('La especialidad debe ser una cadena de texto.')
         .notEmpty()
         .withMessage('La especialidad es obligatoria.')
+        .isNumeric()
+        .withMessage('La especialidad debe ser un ID numérico válido.')
         .custom(async (value) => {
-        const especialidad = await em.findOne(Especialidad, { nombre: value });
+        const especialidad = await em.findOne(Especialidad, { id: value });
         if (!especialidad) {
-            throw new Error('El nombre de la especialidad no es válido.');
+            throw new Error('El id de la especialidad no es válido.');
         }
         return true;
     }),
-];
-/*body('consultorio')
-    .isString().withMessage('El consultorio debe ser una cadena de texto.')
-    .notEmpty().withMessage('El consultorio es obligatorio.')
-    .custom(async (value) => {
-      const consultorio = await em.findOne(Consultorio, { nombre: value });
-      if (!consultorio) {
-        throw new Error('El nombre del consultorio no es válido.');
-      }
-      return true;
+    body('consultorio')
+        .isNumeric().withMessage('El consultorio debe ser un id numerico valido.')
+        .notEmpty().withMessage('El consultorio es obligatorio.')
+        .custom(async (value) => {
+        const consultorio = await em.findOne(Consultorio, { id: value });
+        if (!consultorio) {
+            throw new Error('El id del consultorio no es válido.');
+        }
+        return true;
     })
 ];
- /*...validateEspecialidad,
+/*...validateEspecialidad,
 
-  body('consultorio')
-    .isString()
-    .notEmpty().withMessage('El consultorio es obligatorio.')
+ body('consultorio')
+   .isString()
+   .notEmpty().withMessage('El consultorio es obligatorio.')
 
 
 ];

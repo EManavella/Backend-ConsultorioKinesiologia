@@ -30,7 +30,7 @@ __decorate([
 ], Secretaria.prototype, "password", void 0);
 __decorate([
     Property({ nullable: false }),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Secretaria.prototype, "telefono", void 0);
 __decorate([
     Property({ nullable: false }),

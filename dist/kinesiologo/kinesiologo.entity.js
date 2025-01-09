@@ -42,7 +42,7 @@ __decorate([
 ], Kinesiologo.prototype, "password", void 0);
 __decorate([
     Property({ nullable: false }),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Kinesiologo.prototype, "telefono", void 0);
 __decorate([
     Property({ nullable: false }),

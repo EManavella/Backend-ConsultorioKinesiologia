@@ -19,7 +19,7 @@ export class Kinesiologo extends BaseEntity{
   @Property({ nullable:false })
   password !: string
   @Property({ nullable:false })
-  telefono !: number
+  telefono !: string
   @Property({ nullable:false })
   dni  !: number
   @ManyToOne(()=> Especialidad, {nullable:false})
