@@ -37,7 +37,12 @@ async function login(req, res) {
         if (!isPasswordValid) {
             return res.status(401).json({ message: 'Contraseña incorrecta' });
         }
-        const token = jwt.sign({ id: paciente.id, nombre: paciente.nombre, apellido: paciente.apellido }, JWT_SECRET, {
+        const token = jwt.sign({
+            id: paciente.id,
+            nombre: paciente.nombre,
+            apellido: paciente.apellido,
+            role: 'P' // Role de paciente: 'P'
+        }, JWT_SECRET, {
             expiresIn: '1h',
         });
         // Establece el token en una cookie
@@ -95,7 +100,11 @@ async function obtenerTurnos(req, res) {
     }
 }
 async function logout(req, res) {
-    res.clearCookie('token');
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+    });
     res.status(200).json({ message: 'Cierre de sesión exitoso' });
 }
 async function findAll(req, res) {

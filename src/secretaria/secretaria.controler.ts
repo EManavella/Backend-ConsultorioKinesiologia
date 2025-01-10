@@ -59,7 +59,8 @@ async function login(req: Request, res: Response) {
         id: secretaria.id,
         nombre: secretaria.nombre,
         apellido: secretaria.apellido,
-        consultorio: secretaria.consultorio
+        consultorio: secretaria.consultorio,
+        role: 'S' //role de secretaria: 'S'
       },
       JWT_SECRET,
       {
@@ -86,8 +87,12 @@ async function login(req: Request, res: Response) {
 }
 
 async function logout(req: Request, res: Response) {
-  res.clearCookie('token');
-  res.status(200).json({ message: 'Sesión cerrada exitosamente' });
+  res.clearCookie('token', {
+    httpOnly: true,  // Me aseguro de que solo se pueda acceder desde el servidor
+    secure: process.env.NODE_ENV === 'production',  //  HTTPS en producción
+    sameSite: 'strict', 
+  });
+  res.status(200).json({ message: 'Cierre de sesión exitoso' });
 }
 
 async function findAll(req: Request, res: Response) {

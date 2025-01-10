@@ -16,6 +16,7 @@ import { validarErrores } from '../middlewares/validacionErrores.js';
 import { manejoErrores } from '../middlewares/manejoErrores.js';
 import { Request, Response, NextFunction } from 'express';
 import { authToken } from '../middlewares/authToken.js';
+import { authorizeRole } from '../middlewares/authorizeToken.js';
 import { validateSecretariaUpdate } from './secretaria.validator.update.js';
 
 const secretariaRouter = Router();
@@ -23,11 +24,12 @@ const secretariaRouter = Router();
 secretariaRouter.get('/', findAll);
 secretariaRouter.get('/:id', findOne);
 
-secretariaRouter.get('/consultorio-logueada', authToken, consultorioDeSecretariaLogueada);
-secretariaRouter.get('/k/:id', authToken, obtenerSecretaria);
+secretariaRouter.get('/consultorio-logueada', authToken, authorizeRole('S'), consultorioDeSecretariaLogueada);
+secretariaRouter.get('/k/:id', authToken, authorizeRole('S'), obtenerSecretaria);
 secretariaRouter.patch(
   '/k/:id',
   authToken,
+  authorizeRole('S'),
   validateSecretariaUpdate,
   validarErrores,
   sanitizeSecretariaInput,

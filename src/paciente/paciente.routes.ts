@@ -18,11 +18,12 @@ import { validatePacienteUpdate } from './paciente.validator.update.js';
 import { validarErrores } from '../middlewares/validacionErrores.js';
 import { manejoErrores } from '../middlewares/manejoErrores.js';
 import { authToken } from '../middlewares/authToken.js';
+import { authorizeRole } from '../middlewares/authorizeToken.js';
 
 const pacienteRouter = Router();
 
 pacienteRouter.post('/login', login)
-pacienteRouter.get('/turnos', authToken, obtenerTurnos)
+pacienteRouter.get('/turnos', authToken,authorizeRole('P'), obtenerTurnos)
 
 pacienteRouter.post('/logout', logout);
 
@@ -31,7 +32,7 @@ De esta manera no queda atada y podemos utilizar la ruta que necesitemos en app.
 */
 pacienteRouter.get('/', findAll);
 pacienteRouter.get('/:id', findOne);
-pacienteRouter.get('/k/:id', authToken, obtenerPaciente);
+pacienteRouter.get('/k/:id', authToken,authorizeRole('P'), obtenerPaciente);
 pacienteRouter.post(
   '/',
   validatePaciente,
@@ -43,6 +44,7 @@ pacienteRouter.post(
 pacienteRouter.put(
   '/:id',
   authToken,
+  authorizeRole('P'),
   validatePaciente,
   validarErrores,
   sanitizePacienteInput,
@@ -60,6 +62,7 @@ pacienteRouter.put(
 pacienteRouter.patch(
   '/k/:id',
   authToken,
+  authorizeRole('P'),
   validatePacienteUpdate,
   validarErrores,
   sanitizePacienteInput,
@@ -67,7 +70,7 @@ pacienteRouter.patch(
 );
 
 
-pacienteRouter.delete('/:id', authToken, remove);
+pacienteRouter.delete('/:id', authToken, authorizeRole('S'),remove);
 
 
 

@@ -43,6 +43,7 @@ async function login(req, res) {
             id: kinesiologo.id,
             nombre: kinesiologo.nombre,
             apellido: kinesiologo.apellido,
+            role: 'K' // role de kinesiologo: 'K'
         }, JWT_SECRET, {
             expiresIn: '1h',
         });

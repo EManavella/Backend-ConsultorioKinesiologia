@@ -39,7 +39,8 @@ async function login(req, res) {
             id: secretaria.id,
             nombre: secretaria.nombre,
             apellido: secretaria.apellido,
-            consultorio: secretaria.consultorio
+            consultorio: secretaria.consultorio,
+            role: 'S' //role de secretaria: 'S'
         }, JWT_SECRET, {
             expiresIn: '1h',
         });
@@ -61,8 +62,12 @@ async function login(req, res) {
     }
 }
 async function logout(req, res) {
-    res.clearCookie('token');
-    res.status(200).json({ message: 'Sesión cerrada exitosamente' });
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict',
+    });
+    res.status(200).json({ message: 'Cierre de sesión exitoso' });
 }
 async function findAll(req, res) {
     try {

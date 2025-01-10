@@ -55,9 +55,14 @@ async function login(req: Request, res: Response) {
     }
 
     const token = jwt.sign(
-      { id: paciente.id, nombre: paciente.nombre, apellido: paciente.apellido },
+      { 
+        id: paciente.id, 
+        nombre: paciente.nombre, 
+        apellido: paciente.apellido,
+        role: 'P' // Role de paciente: 'P'
+      },
       JWT_SECRET,
-      {
+      {  
         expiresIn: '1h',
       }
     );
@@ -125,7 +130,11 @@ async function obtenerTurnos(req: Request, res: Response) {
   }
 }
 async function logout(req: Request, res: Response) {
-  res.clearCookie('token');
+  res.clearCookie('token', {
+    httpOnly: true,  // Me aseguro de que solo se pueda acceder desde el servidor
+    secure: process.env.NODE_ENV === 'production',  //  HTTPS en producción
+    sameSite: 'strict', 
+  });
   res.status(200).json({ message: 'Cierre de sesión exitoso' });
 }
 

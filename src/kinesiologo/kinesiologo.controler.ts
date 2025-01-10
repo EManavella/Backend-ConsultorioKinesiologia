@@ -63,6 +63,7 @@ async function login(req: Request, res: Response) {
         id: kinesiologo.id,
         nombre: kinesiologo.nombre,
         apellido: kinesiologo.apellido,
+        role: 'K' // role de kinesiologo: 'K'
       },
       JWT_SECRET,
       {
