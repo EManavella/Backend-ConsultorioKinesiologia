@@ -3,8 +3,9 @@ import { sanitizeTurnoInput, findAll, findOne, add, update, remove, creacionTurn
 import { validateTurno } from "./turno.validator.js";
 import { validarErrores } from "../middlewares/validacionErrores.js";
 import { authToken } from "../middlewares/authToken.js";
+import { authorizeRole } from "../middlewares/authorizeToken.js";
 export const turnoRouter = Router();
-turnoRouter.post('/turnoNuevo', authToken, creacionTurno);
+turnoRouter.post('/turnoNuevo', authToken, authorizeRole('P'), creacionTurno);
 turnoRouter.get('/pendientes/:kineId', authToken, obtenerTurnosKine);
 turnoRouter.get('/', findAll);
 turnoRouter.get('/:id', findOne);

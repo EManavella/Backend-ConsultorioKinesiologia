@@ -24,10 +24,10 @@ const kinesiologoRouter = Router();
 
 kinesiologoRouter.post('/login', login);
 kinesiologoRouter.get('/turnos', authToken, authorizeRole('K'),obtenerTurnosKinesiologo);
-kinesiologoRouter.get('/consul', authToken, findPorConsul);
-kinesiologoRouter.get('/:especialidadId', authToken, findKineByEspCon);
+kinesiologoRouter.get('/consul', authToken, authorizeRole('K'),findPorConsul);
+kinesiologoRouter.get('/:especialidadId', authToken, authorizeRole('S'),findKineByEspCon);
 kinesiologoRouter.get('/:id', findOne);
-kinesiologoRouter.get('/k/:id', authToken,authorizeRole('K'), obtenerKinesiologo);
+kinesiologoRouter.get('/k/:id', authToken, obtenerKinesiologo);
 kinesiologoRouter.post(
   '/',
   authToken,
