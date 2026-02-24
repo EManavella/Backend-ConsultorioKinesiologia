@@ -1,0 +1,64 @@
+### GET ALL
+GET http://localhost:3000/api/consultorios
+
+### POST
+# @name createConsultorio
+POST http://localhost:3000/api/consultorios
+Content-Type: application/json
+
+{
+    "nombre": "Musculito",
+    "domicilio": "Sanchez de loria 77777"
+}
+
+
+### POST 2
+POST http://localhost:3000/api/consultorios
+Content-Type: application/json
+
+{
+    "nombre": "KineSport",
+    "domicilio": "Juan Jose Paso 1500"
+}
+
+### POST 3
+POST http://localhost:3000/api/consultorios
+Content-Type: application/json
+
+{
+    "nombre": "Kinetica",
+    "domicilio": "San Martin 3000"
+}
+
+###ID
+@id = {{createConsultorio.response.body.data.id}}
+
+
+### GET ONE
+GET http://localhost:3000/api/consultorios/{{id}}
+
+
+
+### PUT
+PUT http://localhost:3000/api/consultorios/{{id}}
+Content-Type: application/json
+
+{
+    "nombre": "Kerios",
+    "domicilio": "Pitagoras 777"
+}
+
+
+### POST CONSULTORIO TO DELETE
+# @name createConsultorioToDelete
+POST http://localhost:3000/api/consultorios
+Content-Type: application/json
+
+{
+    "nombre": "El Origen",
+    "domicilio": "Juan Jose Paso 1578"
+}
+
+### DELETE
+@idToDelete = {{createConsultorioToDelete.response.body.data.id}}
+DELETE http://localhost:3000/api/consultorios/{{idToDelete}}

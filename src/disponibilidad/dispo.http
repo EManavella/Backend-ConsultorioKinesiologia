@@ -1,0 +1,66 @@
+### GET ALL
+GET http://localhost:3000/api/disponibilidad
+
+### POST
+# @name createDisponibilidad
+POST http://localhost:3000/api/disponibilidad
+Content-Type: application/json
+
+// Franja horaria del kine no los horarios puntuales donde esta dispo
+
+{
+    "fechaDesde": "2024-11-11",
+    "diaSemana": "Lunes",
+    "horaInicio": "12:00",
+    "horaFin": "20:00",
+    "kinesiologo":"541394092142"
+}
+
+
+### POST 2
+POST http://localhost:3000/api/disponibilidad
+Content-Type: application/json
+
+{
+    "fechaDesde": "2024-11-10",
+    "diaSemana": "Martes",
+    "horaInicio": "06:00",
+    "horaFin": "12:00",
+    "kinesiologo": 1
+}
+
+
+###ID
+@id = {{createDisponibilidad.response.body.data.id}}
+
+
+### GET ONE
+GET http://localhost:3000/api/disponibilidad/{{id}}
+
+
+
+### PUT
+PUT http://localhost:3000/api/disponibilidad/{{id}}
+Content-Type: application/json
+
+{
+    "horaFin": "17:00"
+}
+
+
+### POST CHARACTER TO DELETE
+# @name createDisponibilidadToDelete
+POST http://localhost:3000/api/disponibilidad
+Content-Type: application/json
+
+{
+    "fechaDesde": "2024-02-06",
+    "diaSemana": "Viernes",
+    "horaInicio": "12:00",
+    "horaFin": "18:00",
+    "kinesiologo": 2
+}
+
+### DELETE
+@idToDelete = {{createDisponibilidadToDelete.response.body.data.id}}
+DELETE http://localhost:3000/api/disponibilidad/{{idToDelete}}

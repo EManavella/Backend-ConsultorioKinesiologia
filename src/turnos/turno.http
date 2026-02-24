@@ -1,0 +1,84 @@
+### obtener todos los tunros
+GET http://localhost:3000/api/turnos
+
+
+### POST turno 1
+# @name createTurno
+POST http://localhost:3000/api/turnos
+Content-Type: application/json
+
+{
+    "fecha": "2024-11-05",
+    "hora": "16:00",
+    "estado": "Activo",
+    "importeTotal": 4500,
+    "paciente": 1,
+    "kinesiologo": 1,
+    "consultorio": 1
+}
+
+### POST turno 2
+POST http://localhost:3000/api/turnos
+Content-Type: application/json
+
+{
+    "fecha": "2024-11-02",
+    "hora": "18:00",
+    "estado": "Activo",
+    "importeTotal": 5500,
+    "paciente": 2,
+    "kinesiologo": 1
+}
+
+
+### ID
+@id = {{createTurno.response.body.data.id}}
+
+
+
+
+### GET one turno
+http://localhost:3000/api/turnos/{{id}}
+
+
+### PUT a turno
+PUT http://localhost:3000/api/turnos/{{id}}
+Content-Type: application/json
+
+{
+    "fecha": "10-10-2024",
+    "hora": "15:00"
+}
+
+
+
+### POST a turno to delete
+# @name createTurnoToDelete
+POST http://localhost:3000/api/turnos
+Content-Type: application/json
+
+{
+    "fecha": "2024-10-31",
+    "hora": "16:00",
+    "estado": "Inactivo",
+    "importeTotal": 1500,
+    "paciente": 2,
+    "kinesiologo": 1
+}
+
+
+### DELETE a turno
+@idToDelete = {{createTurnoToDelete.response.body.data.id}}
+DELETE http://localhost:3000/api/turnos/{{idToDelete}}
+
+
+### PATCH a turno
+PATCH http://localhost:3000/api/turnos/{{idToDelete}}
+Content-Type: application/json
+
+{
+  "hora": "14:00"
+}
+
+### DELETE a turno
+DELETE http://localhost:3000/api/turnos/{{idToDelete}}

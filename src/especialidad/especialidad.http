@@ -1,0 +1,64 @@
+### GET ALL
+GET http://localhost:3000/api/especialidades
+
+### POST
+POST http://localhost:3000/api/especialidades
+Content-Type: application/json
+
+{
+    "nombre": "Traumatología",
+    "estado": true
+}
+
+
+### POST 2
+POST http://localhost:3000/api/especialidades
+Content-Type: application/json
+
+{
+    "nombre": "Deportología",
+    "estado": true
+}
+
+### POST 3
+# @name createEspecialidad
+POST http://localhost:3000/api/especialidades
+Content-Type: application/json
+
+{
+    "nombre": "Osteopatía",
+    "estado": true
+}
+
+###ID
+@id = {{createEspecialidad.response.body.data.id}}
+
+
+### GET ONE
+GET http://localhost:3000/api/especialidades/{{id}}
+
+
+
+### PUT
+PUT http://localhost:3000/api/especialidades/{{id}}
+Content-Type: application/json
+
+{
+    "nombre": "Neurología",
+    "estado": true
+}
+
+
+### POST CHARACTER TO DELETE
+# @name createEspecialidadToDelete
+POST http://localhost:3000/api/especialidades
+Content-Type: application/json
+
+{
+    "nombre": "Estética"
+    "estado": false
+}
+
+### DELETE
+@idToDelete = {{createEspecialidadToDelete.response.body.data.id}}
+DELETE http://localhost:3000/api/especialidades/{{idToDelete}}

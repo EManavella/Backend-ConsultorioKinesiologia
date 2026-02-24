@@ -1,0 +1,100 @@
+### obtener todos los kinesiologos
+GET http://localhost:3000/api/kinesiologos
+
+
+### crear un nuevo kinesiologo
+# @name createKinesiologo
+POST http://localhost:3000/api/kinesiologos
+Content-Type: application/json
+
+{
+    "matricula":"541394092142",
+    "nombre": "Ramiro",
+    "apellido": "Parisi",
+    "email": "ramaparisi264@gmail.com",
+    "password": "aRosej241",
+    "telefono": 341333444 ,
+    "dni": 44291893,
+    "especialidad": "Traumatología",
+    "consultorio": "Musculito"
+}
+
+### POST a kinesiologo
+POST http://localhost:3000/api/kinesiologos
+Content-Type: application/json
+/*
+{
+
+    "matricula":"541777092111",
+    "nombre": "Leroy",
+    "apellido": "Oliver",
+    "email": "leroy@gmail.com",
+    "password": "Pollito123",
+    "telefono": 341777999 ,
+    "dni": 44666999,
+    "especialidad": "Deportología",
+    "consultorio": "kineSport"
+}
+*/
+{
+    "matricula":"54199999999",
+    "nombre": "Facundo",
+    "apellido": "Morresi",
+    "email": "facumorresi21@gmail.com",
+    "password": "sanPeDRO534",
+    "telefono": 341777111 ,
+    "dni": 43491793,
+    "especialidad": "Deportología",
+    "consultorio": "Musculito"
+}
+
+### ID
+@id = {{createKinesiologo.response.body.data.id}}
+
+### GET one kinesiologo
+http://localhost:3000/api/kinesiologos/{{id}}
+
+
+### PUT a kinesiologo
+PUT http://localhost:3000/api/kinesiologos/{{id}}
+Content-Type: application/json
+
+{
+    "consultorio": 4
+}
+
+
+
+### POST a kinesiologo
+# @name createKinesiologoToDelete
+POST http://localhost:3000/api/kinesiologos
+Content-Type: application/json
+
+{
+    "matricula":"AB700",
+    "nombre": "Facundo",
+    "apellido": "Morresi",
+    "email": "facumorresi21@gmail.com",
+    "password": "sanPeDRO534",
+    "telefono": 341777111 ,
+    "dni": 43491793,
+    "especialidad": 2,
+    "consultorio": 1
+}
+
+
+### DELETE a character
+@idToDelete = {{createKinesiologoToDelete.response.body.data.id}}
+DELETE http://localhost:3000/api/kinesiologos/{{idToDelete}}
+
+
+### PATCH a character
+PATCH http://localhost:3000/api/kinesiologos/{{idToDelete}}
+Content-Type: application/json
+
+{
+  "telefono": 4578730
+}
+
+### DELETE a character
+DELETE http://localhost:3000/api/kinesiologos/{{idToDelete}}

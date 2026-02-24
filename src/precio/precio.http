@@ -1,0 +1,59 @@
+### GET ALL
+GET http://localhost:3000/api/precios
+
+### POST
+# @name createPrecio
+POST http://localhost:3000/api/precios
+Content-Type: application/json
+
+{
+    "fechaDesde": "2024-10-07",
+    "importe": "5000",
+    "especialidad": 1
+}
+
+
+### POST 2
+POST http://localhost:3000/api/precios
+Content-Type: application/json
+
+{
+    "fechaDesde": "2024-06-19",
+    "importe": "4000",
+    "especialidad": 4
+}
+
+
+###ID
+@id = {{createPrecio.response.body.data.id}}
+
+
+### GET ONE
+GET http://localhost:3000/api/precios/{{id}}
+
+
+
+### PUT
+PUT http://localhost:3000/api/precios/{{id}}
+Content-Type: application/json
+
+{
+    "fechaDesde": "2024-10-10",
+    "importe": "6000"
+}
+
+
+### POST CHARACTER TO DELETE
+# @name createPrecioToDelete
+POST http://localhost:3000/api/precios
+Content-Type: application/json
+
+{
+    "fechaDesde": "2024-09-10",
+    "importe": "9000",
+    "especialidad": 1
+}
+
+### DELETE
+@idToDelete = {{createPrecioToDelete.response.body.data.id}}
+DELETE http://localhost:3000/api/precios/{{idToDelete}}

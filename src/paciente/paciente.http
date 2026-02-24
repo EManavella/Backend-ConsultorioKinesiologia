@@ -1,0 +1,79 @@
+### obtener todos los pacientes
+GET http://localhost:3000/api/pacientes
+
+
+### POST 1
+POST http://localhost:3000/api/pacientes
+Content-Type: application/json
+
+{
+    "nombre": "Carlos",
+    "apellido":"Manavella",
+    "dni": 45392405,
+    "fechaNacimiento":"2003-09-29",
+    "email":"carlosmanavella@gmail.com",
+    "telefono": 341333848,
+    "password":"Carlito4",
+    "estado":"activo",
+    "obraSocial":"Swiss Medical"
+}
+
+
+### POST 2
+# @name createPaciente
+POST http://localhost:3000/api/pacientes
+Content-Type: application/json
+
+{
+    "nombre": "Gabriel",
+    "apellido":"Sandivaras",
+    "dni": 46216734,
+    "fechaNacimiento":"2004-01-07",
+    "email":"gabi@gmail.com",
+    "telefono": 341242424,
+    "password":"8Ra35ngkdjds",
+    "estado":"activo",
+    "obraSocial":"OSAP"
+}
+
+
+###ID
+@id = {{createPaciente.response.body.data.id}}
+
+
+### GET ONE
+GET http://localhost:3000/api/pacientes/{{id}}
+
+
+
+### PUT
+PUT http://localhost:3000/api/pacientes/{{id}}
+Content-Type: application/json
+
+{
+    "email":"gabisandivaras@gmail.com",
+    "estado":"De baja"
+}
+
+
+
+### POST PACIENTE TO DELETE (SI PONGO NRO 341 ME DICE QUE ES MUY LARGO)
+# @name createPacienteToDelete
+POST http://localhost:3000/api/pacientes
+Content-Type: application/json
+
+{
+    "nombre": "Nathan",
+    "apellido":"Drake",
+    "dni": 66666666,
+    "fechaNacimiento":"2007-07-07",
+    "email":"nd@gmail.com",
+    "telefono": 4578730,
+    "password":"Elena777",
+    "estado":"activo",
+    "obraSocial":"IAPOS"
+}
+
+### DELETE
+@idToDelete = {{createPacienteToDelete.response.body.data.id}}
+DELETE http://localhost:3000/api/pacientes/{{idToDelete}}
