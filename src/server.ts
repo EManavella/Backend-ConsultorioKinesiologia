@@ -1,53 +1,64 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import { Request, Response} from 'express'
+import { validationResult } from 'express-validator'
+import { orm } from '../shared/db/orm.js'
+import { Consultorio } from './consultorio.entity.js'
 
-import 'reflect-metadata';
-import express from 'express';
-import { secretariaRouter } from './secretaria/secretaria.routes.js';
-import { orm, syncSchema } from './shared/db/orm.js';
-import { RequestContext } from '@mikro-orm/core';
-import { consultorioRouter } from './consultorio/consultorio.routes.js';
-import { especialidadRouter } from './especialidad/especialidad.routes.js';
-import { kinesiologoRouter } from './kinesiologo/kinesiologo.routes.js';
-import { turnoRouter } from './turnos/turno.routes.js';
-import { pacienteRouter } from './paciente/paciente.routes.js';
-import { precioRouter } from './precio/precio.routes.js';
-import { dispoRouter } from './disponibilidad/dispo.routes.js';
-import cookieParser from 'cookie-parser';
-import cors from 'cors';
+const em = orm.em
 
-const app = express();
-app.use(express.json());
+async function findAll(req: Request, res: Response) {
+  try{
+    const consultorio = await em.find( Consultorio, {} )
+    res.status(200).json( {message: 'Todos los consultorios encontrados', data: consultorio})
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
+  }
+}
 
-app.use(cors({
-  origin: ["http://localhost:5173"], // Usá un array de orígenes permitidos
-  credentials: true,
-}));
+async function findOne(req: Request, res: Response) {
+  try {
+    const id = Number.parseInt(req.params.id)
+    const consultorio = await em.findOneOrFail(Consultorio, { id })
+    res.status(200).json({ message: 'Consultorio encontrado exitosamente', data: consultorio })
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
+  }
+}
 
-app.use(cookieParser()); // Proceso de cookies
+async function add(req: Request, res: Response) {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  try{
+    const consultorio = em.create(Consultorio, req.body)
+    await em.flush()
+    res.status(201).json({ message: 'Consultorio creado exitosamente', data: consultorio })
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
+  }
+}
 
-app.use((req, res, next) => {
-  RequestContext.create(orm.em, next); // em (Entity Manager)
-});
+async function update(req: Request, res: Response) {
+  try {
+    const id = Number.parseInt(req.params.id)
+    const consultorio = em.getReference(Consultorio, id)
+    em.assign(consultorio, req.body)
+    await em.flush()
+    res.status(200).json({ message: 'Consultorio modificado exitosamente' })
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
+  }
+}
 
-//antes de las rutas y middlewares de negocio
+async function remove(req: Request, res: Response) {
+  try {
+    const id = Number.parseInt(req.params.id)
+    const consultorio = em.getReference(Consultorio, id)
+    await em.removeAndFlush(consultorio)
+    res.status(200).send({ message: 'Consultorio borrado exitosamente' })
+  } catch (error: any) {
+    res.status(500).json({ message: error.message })
+  } 
+}
 
-app.use('/api/consultorios', consultorioRouter);
-app.use('/api/secretarias', secretariaRouter);
-app.use('/api/kinesiologos', kinesiologoRouter);
-app.use('/api/especialidades', especialidadRouter);
-app.use('/api/turnos', turnoRouter);
-app.use('/api/pacientes', pacienteRouter);
-app.use('/api/precios', precioRouter);
-app.use('/api/disponibilidad', dispoRouter);
-
-
-app.use((_, res) => {
-  return res.status(404).send({ message: 'Resource not found' });
-});
-
-await syncSchema(); //never in production
-
-app.listen(3000, () => {
-  console.log('Server runnning on http://localhost:3000/');
-});
+export { findAll, findOne, add, update, remove }

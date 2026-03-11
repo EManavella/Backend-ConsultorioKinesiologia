@@ -1,1 +1,6 @@
-node_modules
+node_modulesDB_HOST=mysql
+DB_PORT=3306
+DB_NAME=consultorio
+DB_USER=nibble
+DB_PASSWORD=nibble
+PORT=3000
